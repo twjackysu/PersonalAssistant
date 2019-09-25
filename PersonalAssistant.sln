@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAssistant", "PersonalAssistant\PersonalAssistant.csproj", "{AB438ED2-F55D-4D2E-A982-9458FBC5700F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB438ED2-F55D-4D2E-A982-9458FBC5700F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB438ED2-F55D-4D2E-A982-9458FBC5700F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB438ED2-F55D-4D2E-A982-9458FBC5700F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB438ED2-F55D-4D2E-A982-9458FBC5700F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89B96DAF-1927-496E-A7F5-076246E077A4}
+	EndGlobalSection
+EndGlobal
