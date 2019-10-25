@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
+import { connect } from "react-redux";
+import { CssBaseline, Container } from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import NavMenu from './NavMenu';
 
-export class Layout extends Component {
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark'
+  }
+});
+const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light'
+  }
+});
+
+class Layout extends Component {
   static displayName = Layout.name;
 
-  render () {
+  render() {
     return (
-      <div>
+      <MuiThemeProvider theme={this.props.dark ? darkTheme : lightTheme}>
+        <CssBaseline />
         <NavMenu />
         <Container>
           {this.props.children}
         </Container>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
+
+
+const mapStateToProps = store => ({ dark: store.theme });
+export default connect(mapStateToProps)(Layout);

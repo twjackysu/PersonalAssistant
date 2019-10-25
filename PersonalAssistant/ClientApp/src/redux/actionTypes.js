@@ -1,0 +1,4 @@
+export const CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
+export const CHANGE_THEME = "CHANGE_THEME";
+export const OPEN_MENU_LIST = "OPEN_MENU_LIST";
+export const CLOSE_MENU_LIST = "CLOSE_MENU_LIST";

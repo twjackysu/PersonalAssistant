@@ -1,26 +1,49 @@
-import React, { Component } from 'react';
-
-export class Home extends Component {
-  static displayName = Home.name;
-
-  render () {
-    return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
-    );
+import React from 'react';
+import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
+import { Button, Grid } from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+//import { change_language } from "../redux/actions";
+const overrideMuiButton = {
+  root: {
+    fontSize: '2.4rem'
   }
+};
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark'
+  },
+  overrides: {
+    MuiButton: overrideMuiButton
+  }
+});
+const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light'
+  },
+  overrides: {
+    MuiButton: overrideMuiButton
+  }
+});
+const Home = props => {
+  return (
+    <MuiThemeProvider theme={props.dark ? darkTheme : lightTheme}>
+      <Grid container spacing={10}>
+        <Grid item xs={12} md={6}>
+          <Button variant='outlined' component={Link} to='/passwordManager' fullWidth>
+            <VpnKeyIcon fontSize='large' /> {props.translate.passwordManager}
+          </Button>
+        </Grid>
+      </Grid>
+    </MuiThemeProvider>
+  );
 }
+
+const mapStateToProps = store => ({
+  translate: {
+    passwordManager: store.lang.translation.home.passwordManager,
+  },
+  dark: store.theme
+});
+export default connect(mapStateToProps)(Home);
