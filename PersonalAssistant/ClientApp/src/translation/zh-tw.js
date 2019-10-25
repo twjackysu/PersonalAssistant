@@ -12,7 +12,7 @@ export default {
     home: {
         passwordManager: '密碼管理'
     },
-    passwordManager: {
+    generatePassword: {
         generatePassword: '產生密碼',
         password: '密碼',
         includeLowercaseLetters: '包含小寫字母',
@@ -21,6 +21,8 @@ export default {
         includeSpecialCharacters: '包含特殊符號',
         setSpecialCharacters: '設定特殊符號',
         modifySpecialCharacters: '修改允許的特殊符號清單，請勿使用任何符號分隔',
+        copySuccessful: '複製到剪貼簿成功！',
+        copyError: '無法複製密碼，錯誤訊息：',
         cancel: '取消',
         confirm: '確認'
     }

@@ -12,7 +12,7 @@ export default {
     home: {
         passwordManager: 'Password manager'
     },
-    passwordManager: {
+    generatePassword: {
         generatePassword: 'Generate password',
         password: 'Password',
         includeLowercaseLetters: 'Include lowercase letters',
@@ -21,6 +21,8 @@ export default {
         includeSpecialCharacters: 'Include special characters',
         setSpecialCharacters: 'Set special characters',
         modifySpecialCharacters: 'Modify the list of allowed special characters, don\'t use any character to separate.',
+        copySuccessful: 'Copying to clipboard was successful!',
+        copyError: 'Could not copy the password, the error message: ',
         cancel: 'Cancel',
         confirm: 'Confirm'
     }
