@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { CssBaseline, Container } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import NavMenu from './NavMenu';
 
@@ -23,9 +23,7 @@ class Layout extends Component {
       <MuiThemeProvider theme={this.props.dark ? darkTheme : lightTheme}>
         <CssBaseline />
         <NavMenu />
-        <Container>
-          {this.props.children}
-        </Container>
+        {this.props.children}
       </MuiThemeProvider>
     );
   }

@@ -10,7 +10,11 @@ export default {
         changeLanguage: 'Change language'
     },
     home: {
-        passwordManager: 'Password manager'
+        passwordManager: 'Password manager',
+        accountManager: 'Account manager'
+    },
+    passwordManager: {
+        explanation: 'Since serious problems may occur when security is not good, it is temporarily decided not to do password manager tool.'
     },
     generatePassword: {
         generatePassword: 'Generate password',

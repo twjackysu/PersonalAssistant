@@ -10,7 +10,11 @@ export default {
         changeLanguage: '改變語言'
     },
     home: {
-        passwordManager: '密碼管理'
+        passwordManager: '密碼管理',
+        accountManager: '帳戶管理'
+    },
+    passwordManager: {
+        explanation: '由於安全性做不好時可能會發生很嚴重的問題，暫時決定先不做密碼管理工具了。'
     },
     generatePassword: {
         generatePassword: '產生密碼',

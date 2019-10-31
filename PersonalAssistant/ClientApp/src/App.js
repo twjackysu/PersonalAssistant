@@ -4,6 +4,7 @@ import { Route } from 'react-router';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import PasswordManager from './components/PasswordManager';
+import AccountManager from './components/AccountManager';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
@@ -18,6 +19,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/passwordManager' component={PasswordManager} />
+        <Route path='/accountManager' component={AccountManager} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );

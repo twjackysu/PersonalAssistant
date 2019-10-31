@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Grid } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 //import { change_language } from "../redux/actions";
 const overrideMuiButton = {
   root: {
@@ -31,8 +32,23 @@ const Home = props => {
     <MuiThemeProvider theme={props.dark ? darkTheme : lightTheme}>
       <Grid container spacing={10}>
         <Grid item xs={12} md={6}>
-          <Button variant='outlined' component={Link} to='/passwordManager' fullWidth>
-            <VpnKeyIcon fontSize='large' /> {props.translate.passwordManager}
+          <Button
+            size='large'
+            variant='outlined'
+            component={Link} to='/passwordManager'
+            startIcon={<VpnKeyIcon fontSize='large' />}
+            fullWidth>
+            {props.translate.passwordManager}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Button
+            size='large'
+            variant='outlined'
+            component={Link} to='/accountManager'
+            startIcon={<AccountBalanceIcon fontSize='large' />}
+            fullWidth>
+             {props.translate.accountManager}
           </Button>
         </Grid>
       </Grid>
@@ -43,6 +59,7 @@ const Home = props => {
 const mapStateToProps = store => ({
   translate: {
     passwordManager: store.lang.translation.home.passwordManager,
+    accountManager: store.lang.translation.home.accountManager,
   },
   dark: store.theme
 });
