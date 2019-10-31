@@ -10,8 +10,7 @@ import Brightness2Icon from '@material-ui/icons/Brightness2';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import { createMuiTheme, withStyles, MuiThemeProvider } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
+import { withStyles } from '@material-ui/core/styles';
 
 import { change_language, change_theme, switch_menu_list } from "../redux/actions";
 import enus from '../translation/en-us';
@@ -23,32 +22,7 @@ const styles = theme => ({
         paddingLeft: theme.spacing(4),
     },
 });
-const darkTheme = createMuiTheme({
-    palette: {
-        type: 'dark'
-    },
-    overrides: {
-        MuiAppBar: {
-            colorPrimary: {
-                color: grey[200],
-                backgroundColor: grey[900]
-            }
-        },
-    }
-});
-const lightTheme = createMuiTheme({
-    palette: {
-        type: 'light'
-    },
-    overrides: {
-        MuiAppBar: {
-            colorPrimary: {
-                color: grey[900],
-                backgroundColor: grey[200]
-            }
-        },
-    }
-});
+
 const NavMenu = props => {
     const [open, setOpen] = React.useState(false);
 
@@ -57,8 +31,7 @@ const NavMenu = props => {
     };
     let themeIcon = props.dark ? <Brightness2Icon onChange={() => props.change_theme()} /> : <WbSunnyIcon onChange={() => props.change_theme()} />;
     return (
-        <MuiThemeProvider theme={props.dark ? darkTheme : lightTheme}>
-            <AppBar position='static'>
+            <AppBar position='static' color='default'>
                 <Toolbar>
                     <Grid container direction='row' justify='space-between' alignItems='center'>
                         <Grid item>
@@ -137,7 +110,6 @@ const NavMenu = props => {
                     </Drawer>
                 </Toolbar>
             </AppBar>
-        </MuiThemeProvider>
     );
 };
 

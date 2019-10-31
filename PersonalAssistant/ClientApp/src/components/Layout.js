@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { CssBaseline } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import NavMenu from './NavMenu';
+import NavTabs from './NavTabs';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -23,6 +24,7 @@ class Layout extends Component {
       <MuiThemeProvider theme={this.props.dark ? darkTheme : lightTheme}>
         <CssBaseline />
         <NavMenu />
+        <NavTabs />
         {this.props.children}
       </MuiThemeProvider>
     );
