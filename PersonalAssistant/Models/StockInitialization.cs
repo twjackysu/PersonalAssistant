@@ -1,16 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PersonalAssistant.Models
 {
-    public class ExpenditureType
+    public class StockInitialization
     {
+
         [Key]
         public int? ID { get; set; }
+
         public string OwnerID { get; set; }
-        public string TypeName { get; set; }
+
+        [StringLength(10)]
+        [Required]
+        public string StockCode { get; set; }
+
+        [Range(1, int.MaxValue)]
+        public int Amount { get; set; }
     }
 }

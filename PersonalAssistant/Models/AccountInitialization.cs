@@ -7,7 +7,7 @@ namespace PersonalAssistant.Models
     public class AccountInitialization
     {
         [Key]
-        public int AccountInitializationID { get; set; }
+        public int? ID { get; set; }
 
         public string OwnerID { get; set; }
 

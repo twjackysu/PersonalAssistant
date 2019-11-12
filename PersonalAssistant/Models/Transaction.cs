@@ -7,7 +7,7 @@ namespace PersonalAssistant.Models
     public class Transaction
     {
         [Key]
-        public int TransactionID { get; set; }
+        public int? ID { get; set; }
 
         public string OwnerID { get; set; }
 

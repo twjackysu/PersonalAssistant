@@ -11,6 +11,11 @@ using PersonalAssistant.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using IdentityModel;
+using IdentityServer4.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace PersonalAssistant
 {
@@ -39,9 +44,9 @@ namespace PersonalAssistant
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options => 
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddRazorPages();
-
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

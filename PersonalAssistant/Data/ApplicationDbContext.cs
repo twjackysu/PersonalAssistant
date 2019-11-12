@@ -17,5 +17,8 @@ namespace PersonalAssistant.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<ExpenditureType> ExpenditureType { get; set; }
+        public DbSet<AccountInitialization> AccountInitialization { get; set; }
+        public DbSet<StockInitialization> StockInitialization { get; set; }
     }
 }

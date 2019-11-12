@@ -7,7 +7,7 @@ import AccountManager from './components/AccountManager';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
-import { TabPaths } from './helper/RouterConstants'
+import { TabPaths } from './helper/RouterConstants';
 
 import './custom.css'
 
@@ -17,9 +17,9 @@ export default class App extends Component {
   render() {
     return (
       <Layout>
-        <Route exact path={TabPaths.Default} component={AccountManager} />
+        <AuthorizeRoute exact path={TabPaths.Default} component={AccountManager} />
         <Route path={TabPaths.PasswordManager} component={PasswordManager} />
-        <Route path={TabPaths.AccountManager} component={AccountManager} />
+        <AuthorizeRoute path={TabPaths.AccountManager} component={AccountManager} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );

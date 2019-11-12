@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Box, Tabs, Tab, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import ExpenditureType from './ExpenditureType';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -31,13 +33,16 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: '100vh',
+    backgroundColor: theme.palette.background.paper,
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
+  tabPanel: {
+    width: '100vw',
+  }
 }));
 const AccountManager = props => {
   const classes = useStyles();
@@ -57,8 +62,8 @@ const AccountManager = props => {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
+        <Tab label="Dashboard" {...a11yProps(0)} />
+        <Tab label={props.translate.expenditureType} {...a11yProps(1)} />
         <Tab label="Item Three" {...a11yProps(2)} />
         <Tab label="Item Four" {...a11yProps(3)} />
         <Tab label="Item Five" {...a11yProps(4)} />
@@ -66,10 +71,10 @@ const AccountManager = props => {
         <Tab label="Item Seven" {...a11yProps(6)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        Item One
+        Dashboard
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
+      <TabPanel value={value} index={1} className={classes.tabPanel}>
+        <ExpenditureType />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
@@ -92,6 +97,7 @@ const AccountManager = props => {
 
 const mapStateToProps = store => ({
   translate: {
+    expenditureType: store.lang.translation.accountManager.expenditureType,
   }
 });
 export default connect(mapStateToProps)(AccountManager);

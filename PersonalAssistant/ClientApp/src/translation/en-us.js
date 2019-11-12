@@ -13,6 +13,9 @@ export default {
         passwordManager: 'Password manager',
         accountManager: 'Account manager'
     },
+    accountManager:{
+        expenditureType: 'Types of expenditure'
+    },
     passwordManager: {
         explanation: 'Since serious problems may occur when security is not good, it is temporarily decided not to do password manager tool.'
     },
