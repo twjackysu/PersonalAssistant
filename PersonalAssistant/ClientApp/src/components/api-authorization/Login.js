@@ -51,12 +51,12 @@ export class Login extends Component {
         } else {
             switch (action) {
                 case LoginActions.Login:
-                    return (<Loading text='Redirect to IdentityServer' />);
+                    return (<Loading />);
                 case LoginActions.LoginCallback:
-                    return (<Loading text='Processing login callback' />);
+                    return (<Loading />);
                 case LoginActions.Profile:
                 case LoginActions.Register:
-                    return (<Loading text='' />);
+                    return (<Loading />);
                 default:
                     throw new Error(`Invalid action '${action}'`);
             }

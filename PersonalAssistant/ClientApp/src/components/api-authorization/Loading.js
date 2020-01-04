@@ -1,20 +1,26 @@
 import React, { Fragment } from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@material-ui/core/Backdrop';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     marginTop: {
         marginTop: theme.spacing(5),
     },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
 }));
 
 export default function Loading(props) {
     const classes = useStyles();
     return (
-        <Fragment>
-            <Typography variant='h5' className={classes.marginTop}>{props.text}</Typography>
-            <LinearProgress className={classes.marginTop} />
-        </Fragment>
+        <Backdrop
+            className={classes.backdrop}
+            open={true}
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
     );
 }

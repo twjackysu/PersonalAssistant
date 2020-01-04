@@ -22,7 +22,8 @@ export default {
         add: '新增',
         edit: '修改',
         delete: '刪除',
-        typeName: '類型名稱'
+        typeName: '類型名稱',
+        areYouSureDeleteThisRow: '你確定要刪除此行嗎?'
     },
     passwordManager: {
         explanation: '由於安全性做不好時可能會發生很嚴重的問題，暫時決定先不做密碼管理工具了。'

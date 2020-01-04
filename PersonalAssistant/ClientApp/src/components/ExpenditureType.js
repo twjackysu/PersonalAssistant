@@ -83,6 +83,7 @@ class ExpenditureType extends Component {
             deleteTooltip: this.props.translate.delete,
             editTooltip: this.props.translate.edit,
             editRow: {
+              deleteText: this.props.translate.areYouSureDeleteThisRow,
               cancelTooltip: this.props.translate.cancel,
               saveTooltip: this.props.translate.save
             }
@@ -145,6 +146,7 @@ const mapStateToProps = store => ({
     delete: store.lang.translation.accountManager.delete,
     edit: store.lang.translation.accountManager.edit,
     typeName: store.lang.translation.accountManager.typeName,
+    areYouSureDeleteThisRow: store.lang.translation.accountManager.areYouSureDeleteThisRow
   }
 });
 export default connect(mapStateToProps)(ExpenditureType);

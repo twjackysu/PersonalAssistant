@@ -22,7 +22,8 @@ export default {
         add: 'Add',
         edit: 'Edit',
         delete: 'Delete',
-        typeName: 'Type Name'
+        typeName: 'Type Name',
+        areYouSureDeleteThisRow: 'Are you sure delete this row?'
     },
     passwordManager: {
         explanation: 'Since serious problems may occur when security is not good, it is temporarily decided not to do password manager tool.'
