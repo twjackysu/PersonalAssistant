@@ -27,18 +27,14 @@ namespace PersonalAssistant.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> GetToMaterialTable()
+        public async Task<IActionResult> Get()
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            return Ok(new MaterialTable<ExpenditureType>
-            {
-                columns = typeof(ExpenditureType).GetMaterialTableColumns(),
-                data = await _context.ExpenditureType.Where(x => x.OwnerID == userID)
+            return Ok(await _context.ExpenditureType.Where(x => x.OwnerID == userID)
                 .Select(x => new ExpenditureType { ID = x.ID, TypeName = x.TypeName })//remove user sid to reduce json size
-                .AsNoTracking().ToArrayAsync()
-            });
+                .AsNoTracking().ToArrayAsync());
         }
 
         // GET api/<controller>/5

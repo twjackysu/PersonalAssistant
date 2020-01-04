@@ -14,7 +14,15 @@ export default {
         accountManager: '帳戶管理'
     },
     accountManager:{
-        expenditureType: '支出類型'
+        expenditureType: '支出類型',
+        actions: '動作',
+        cancel: '取消',
+        save: '儲存',
+        noRecordsToDisplay: '無紀錄可顯示',
+        add: '新增',
+        edit: '修改',
+        delete: '刪除',
+        typeName: '類型名稱'
     },
     passwordManager: {
         explanation: '由於安全性做不好時可能會發生很嚴重的問題，暫時決定先不做密碼管理工具了。'

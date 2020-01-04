@@ -14,7 +14,15 @@ export default {
         accountManager: 'Account manager'
     },
     accountManager:{
-        expenditureType: 'Types of expenditure'
+        expenditureType: 'Types of expenditure',
+        actions: 'Actions',
+        cancel: 'Cancel',
+        save: 'Save',
+        noRecordsToDisplay: 'No records to display',
+        add: 'Add',
+        edit: 'Edit',
+        delete: 'Delete',
+        typeName: 'Type Name'
     },
     passwordManager: {
         explanation: 'Since serious problems may occur when security is not good, it is temporarily decided not to do password manager tool.'

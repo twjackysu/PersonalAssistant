@@ -14,7 +14,6 @@ class ExpenditureType extends Component {
     super(props);
     this.state = {
       loading: true,
-      columns: [],
       data: []
     };
   }
@@ -58,7 +57,7 @@ class ExpenditureType extends Component {
       }
       throw new TypeError(`${HttpMethod.Get} ${WebApi.ExpenditureTypes} ${HttpHeader.ContentType}: ${contentType}`);
     }).then(json => {
-      this.setState({ columns: json.columns, data: json.data, loading: false });
+      this.setState({ data: json, loading: false });
     }).catch(error => console.error(error));
   }
 
@@ -69,8 +68,26 @@ class ExpenditureType extends Component {
     return (
       <MaterialTable
         title={this.props.translate.expenditureType}
-        columns={this.state.columns}
+        columns={[{
+          title: this.props.translate.typeName,
+          field: 'TypeName'
+        }]}
         data={this.state.data}
+        localization={{
+          header: {
+            actions: this.props.translate.actions
+          },
+          body: {
+            emptyDataSourceMessage: this.props.translate.noRecordsToDisplay,
+            addTooltip: this.props.translate.add,
+            deleteTooltip: this.props.translate.delete,
+            editTooltip: this.props.translate.edit,
+            editRow: {
+              cancelTooltip: this.props.translate.cancel,
+              saveTooltip: this.props.translate.save
+            }
+          }
+        }}
         editable={{
           onRowAdd: newData => {
             return this.oidc(HttpMethod.Post, { ...newData, OwnerID: null, ID: null }).then(response => {
@@ -120,6 +137,14 @@ class ExpenditureType extends Component {
 const mapStateToProps = store => ({
   translate: {
     expenditureType: store.lang.translation.accountManager.expenditureType,
+    actions: store.lang.translation.accountManager.actions,
+    cancel: store.lang.translation.accountManager.cancel,
+    save: store.lang.translation.accountManager.save,
+    noRecordsToDisplay: store.lang.translation.accountManager.noRecordsToDisplay,
+    add: store.lang.translation.accountManager.add,
+    delete: store.lang.translation.accountManager.delete,
+    edit: store.lang.translation.accountManager.edit,
+    typeName: store.lang.translation.accountManager.typeName,
   }
 });
 export default connect(mapStateToProps)(ExpenditureType);
