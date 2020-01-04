@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PersonalAssistant.Models
+namespace PersonalAssistant.Models.AccountManager
 {
     public class StockInitialization
     {
@@ -9,6 +9,8 @@ namespace PersonalAssistant.Models
         [Key]
         public int? ID { get; set; }
 
+        [StringLength(50)]
+        [Required]
         public string OwnerID { get; set; }
 
         [StringLength(10)]
@@ -16,6 +18,7 @@ namespace PersonalAssistant.Models
         public string StockCode { get; set; }
 
         [Range(1, int.MaxValue)]
+        [Required]
         public int Amount { get; set; }
     }
 }

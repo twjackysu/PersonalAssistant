@@ -1,45 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PersonalAssistant.Models
+namespace PersonalAssistant.Models.AccountManager
 {
     public class StockTransaction
     {
         [Key]
-        public int StockTransactionID { get; set; }
+        public int? ID { get; set; }
 
+        [StringLength(50)]
+        [Required]
         public string OwnerID { get; set; }
 
         [DataType(DataType.Date)]
+        [Required]
         public DateTime Date { get; set; }
 
+        [Required]
         public int AccountID { get; set; }
 
         public AccountInitialization Account { get; set; }
 
+        [StringLength(10)]
         [Required]
         public string StockCode { get; set; }
 
         [Required]
         public StockTransactionType Type { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:C}")]
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "decimal(18,2)")]
-        [Range(1, double.MaxValue)]
+        [Required]
         public decimal Price { get; set; }
 
         [Range(1, int.MaxValue)]
+        [Required]
         public int Amount { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:C}")]
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "decimal(18,2)")]
-        [Range(0, double.MaxValue)]
         public decimal? Fees { get; set; }
     }
     public enum StockTransactionType

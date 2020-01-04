@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PersonalAssistant.Data;
 using PersonalAssistant.Extension;
-using PersonalAssistant.Models;
-using PersonalAssistant.Models.FrontEndDataObject;
+using PersonalAssistant.Models.AccountManager;
 using System.Linq;
 using System.Threading.Tasks;
 
