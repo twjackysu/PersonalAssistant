@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import MaterialTable from 'material-table';
-import authService from './api-authorization/AuthorizeService'
+import authService from './api-authorization/AuthorizeService';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { HttpMethod, HttpHeader, ApplicationJson, CharsetUTF8 } from '../helper/GeneralConstants'
-import { WebApi } from '../helper/RouterConstants'
+import { HttpMethod, HttpHeader, ApplicationJson, CharsetUTF8 } from '../helper/GeneralConstants';
 
 class ExpenditureType extends Component {
   static displayName = ExpenditureType.name;

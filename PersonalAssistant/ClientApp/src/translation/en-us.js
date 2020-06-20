@@ -10,20 +10,33 @@ export default {
         changeLanguage: 'Change language'
     },
     home: {
+        home: 'Home',
         passwordManager: 'Password manager',
-        accountManager: 'Account manager'
+        accountManager: 'Account manager',
+        announcement: 'A website I build when I\'m bored and help myself to process some things.',
     },
     accountManager:{
-        expenditureType: 'Types of expenditure',
-        actions: 'Actions',
-        cancel: 'Cancel',
-        save: 'Save',
-        noRecordsToDisplay: 'No records to display',
-        add: 'Add',
-        edit: 'Edit',
-        delete: 'Delete',
-        typeName: 'Type Name',
-        areYouSureDeleteThisRow: 'Are you sure delete this row?'
+        Dashboard: 'Dashboard',
+        ExpenditureType: 'Types of expenditure',
+        ExpenditureTypeID: 'Types of expenditure',
+        TypeName: 'Type Name',
+        AccountInitialization: 'Account initialization',
+        StockInitialization: 'Stock initialization',
+        StockTransaction: 'Stock transaction',
+        Expenditure: 'Expenditure',
+        Income: 'Income',
+        InternalTransfer: 'Internal transfer',
+        Name: 'Name',
+        Balance: 'Balance',
+        EffectiveDate: 'Effective date',
+        AccountID: 'Account',
+        TransferIntoAccountID: 'Transfer into Account',
+        Amount: 'Amount',
+        Remarks: 'Remarks',
+        StockCode: 'Stock code',
+        Type: 'Transaction type',
+        Price: 'Price per share',
+        Fees: 'Fees',
     },
     passwordManager: {
         explanation: 'Since serious problems may occur when security is not good, it is temporarily decided not to do password manager tool.'
@@ -41,5 +54,15 @@ export default {
         copyError: 'Could not copy the password, the error message: ',
         cancel: 'Cancel',
         confirm: 'Confirm'
-    }
+    },
+    materialTable:{
+        actions: 'Actions',
+        cancel: 'Cancel',
+        save: 'Save',
+        noRecordsToDisplay: 'No records to display',
+        add: 'Add',
+        edit: 'Edit',
+        delete: 'Delete',
+        areYouSureDeleteThisRow: 'Are you sure delete this row?'
+    },
 };

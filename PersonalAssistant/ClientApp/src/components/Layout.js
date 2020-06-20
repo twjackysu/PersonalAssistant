@@ -8,11 +8,19 @@ import NavTabs from './NavTabs';
 const darkTheme = createMuiTheme({
   palette: {
     type: 'dark'
+  },
+  typography: {
+    fontFamily: ['"cwTeXYen"', 'sans-serif'].join(','),
+    fontSize: 20
   }
 });
 const lightTheme = createMuiTheme({
   palette: {
     type: 'light'
+  },
+  typography: {
+    fontFamily: ['"cwTeXYen"', 'sans-serif'].join(','),
+    fontSize: 20
   }
 });
 

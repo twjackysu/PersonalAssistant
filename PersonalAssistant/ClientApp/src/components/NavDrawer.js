@@ -9,6 +9,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
+import HomeIcon from '@material-ui/icons/Home';
 import { withStyles } from '@material-ui/core/styles';
 
 import { change_language, change_theme, switch_menu_list } from "../redux/actions";
@@ -33,7 +34,13 @@ const NavDrawer = props => {
   return (
     <Drawer open={props.showMenu} onClose={(e) => props.switch_menu_list(false)}>
       <List>
-        <ListItem button component={Link} to={TabPaths.AccountManager}>
+        <ListItem button component={Link} to={TabPaths.Default}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary={props.translate.home} />
+        </ListItem>
+        <ListItem button component={Link} to={TabPaths.AccountManager.Index}>
           <ListItemIcon>
             <AccountBalanceIcon />
           </ListItemIcon>
@@ -81,6 +88,7 @@ const mapStateToProps = store => ({
     code: store.lang.translation.code,
     passwordManager: store.lang.translation.home.passwordManager,
     accountManager: store.lang.translation.home.accountManager,
+    home: store.lang.translation.home.home,
     switchTheme: store.lang.translation.menu.switchTheme,
     changeLanguage: store.lang.translation.menu.changeLanguage,
   },

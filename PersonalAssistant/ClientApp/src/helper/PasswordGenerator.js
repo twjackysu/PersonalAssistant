@@ -15,16 +15,16 @@ export class PasswordGenerator {
     generatePassword(options, length) {
         let allValue = [];
         let requirementEnable = ('0000' + options.toString(2)).slice(-4);
-        if (requirementEnable[0] == 1) {
+        if (requirementEnable[0] === '1') {
             allValue = allValue.concat(this.lowercaseLetters);
         }
-        if (requirementEnable[1] == 1) {
+        if (requirementEnable[1] === '1') {
             allValue = allValue.concat(this.uppercaseLetters);
         }
-        if (requirementEnable[2] == 1) {
+        if (requirementEnable[2] === '1') {
             allValue = allValue.concat(this.numbers);
         }
-        if (requirementEnable[3] == 1) {
+        if (requirementEnable[3] === '1') {
             allValue = allValue.concat(this.specialCharacters);
         }
         if(length < 4)
@@ -42,7 +42,7 @@ export class PasswordGenerator {
                 password += allValue[index];
                 set.add(allValue[index]);
             }
-            if (requirementEnable[0] == 1) {
+            if (requirementEnable[0] === '1') {
                 let hasLowercaseLetters = false;
                 for (let i = 0; i < this.lowercaseLetters.length; i++) {
                     if (set.has(this.lowercaseLetters[i])) {
@@ -55,7 +55,7 @@ export class PasswordGenerator {
                 }
             }
 
-            if (requirementEnable[1] == 1) {
+            if (requirementEnable[1] === '1') {
                 let hasUppercaseLetters = false;
                 for (let i = 0; i < this.uppercaseLetters.length; i++) {
                     if (set.has(this.uppercaseLetters[i])) {
@@ -68,7 +68,7 @@ export class PasswordGenerator {
                 }
             }
 
-            if (requirementEnable[2] == 1) {
+            if (requirementEnable[2] === '1') {
                 let hasNumbers = false;
                 for (let i = 0; i < this.numbers.length; i++) {
                     if (set.has(this.numbers[i])) {
@@ -80,7 +80,7 @@ export class PasswordGenerator {
                     continueLoop = true;
                 }
             }
-            if (requirementEnable[3] == 1) {
+            if (requirementEnable[3] === '1') {
                 let hasSpecialCharacters = false;
                 for (let i = 0; i < this.specialCharacters.length; i++) {
                     if (set.has(this.specialCharacters[i])) {

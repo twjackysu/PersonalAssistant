@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalAssistant.Models.AccountManager
 {
@@ -8,7 +9,7 @@ namespace PersonalAssistant.Models.AccountManager
         [Key]
         public int? ID { get; set; }
 
-        [Required]
+        [StringLength(50)]
         public string OwnerID { get; set; }
 
         [DataType(DataType.Date)]
@@ -18,20 +19,19 @@ namespace PersonalAssistant.Models.AccountManager
         [Required]
         public int AccountID { get; set; }
 
+        [ForeignKey("AccountID")]
         public AccountInitialization Account { get; set; }
 
         [Required]
-        public decimal OutAmount { get; set; }
+        public decimal Amount { get; set; }
 
         public int? Fees { get; set; }
 
         [Required]
         public int TransferIntoAccountID { get; set; }
 
+        [ForeignKey("TransferIntoAccountID")]
         public AccountInitialization TransferIntoAccount { get; set; }
-
-        [Required]
-        public decimal InAmount { get; set; }
 
         public string Remarks { get; set; }
     }

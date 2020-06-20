@@ -20,6 +20,10 @@ namespace PersonalAssistant.Data
         }
         public DbSet<ExpenditureType> ExpenditureType { get; set; }
         public DbSet<AccountInitialization> AccountInitialization { get; set; }
+        public DbSet<Expenditure> Expenditure { get; set; }
+        public DbSet<Income> Income { get; set; }
+        public DbSet<InternalTransfer> InternalTransfer { get; set; }
         public DbSet<StockInitialization> StockInitialization { get; set; }
+        public DbSet<StockTransaction> StockTransaction { get; set; }
     }
 }

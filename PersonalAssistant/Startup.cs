@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using IdentityModel;
 using IdentityServer4.Models;
 using Newtonsoft.Json.Serialization;
+using StockLib;
+using PersonalAssistant.Services;
 
 namespace PersonalAssistant
 {
@@ -42,7 +44,19 @@ namespace PersonalAssistant
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
+                .AddGoogle(options => {
+                    options.ClientId = Configuration["Authentication:Google:ClientId"];
+                    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                })
+                .AddFacebook(options => {
+                    options.AppId = Configuration["Authentication:Facebook:AppId"];
+                    options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                })
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IStockInfoBuilder, StockInfoBuilder>();
+            services.AddTransient<IStockDB, StockDB>();
+            services.AddTransient<IDashboardHelper, DashboardHelper>();
 
             services.AddControllersWithViews().AddNewtonsoftJson(options => 
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver());

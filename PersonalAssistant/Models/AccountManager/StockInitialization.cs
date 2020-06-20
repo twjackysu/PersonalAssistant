@@ -10,8 +10,10 @@ namespace PersonalAssistant.Models.AccountManager
         public int? ID { get; set; }
 
         [StringLength(50)]
-        [Required]
         public string OwnerID { get; set; }
+
+        [Required]
+        public DateTime EffectiveDate { get; set; }
 
         [StringLength(10)]
         [Required]

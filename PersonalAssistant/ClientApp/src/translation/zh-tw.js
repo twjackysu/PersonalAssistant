@@ -10,20 +10,33 @@ export default {
         changeLanguage: '改變語言'
     },
     home: {
+        home: '首頁',
         passwordManager: '密碼管理',
-        accountManager: '帳戶管理'
+        accountManager: '帳戶管理',
+        announcement: '無聊給自己記帳寫的網站，幫助自己處理一些事物。',
     },
     accountManager:{
-        expenditureType: '支出類型',
-        actions: '動作',
-        cancel: '取消',
-        save: '儲存',
-        noRecordsToDisplay: '無紀錄可顯示',
-        add: '新增',
-        edit: '修改',
-        delete: '刪除',
-        typeName: '類型名稱',
-        areYouSureDeleteThisRow: '你確定要刪除此行嗎?'
+        Dashboard: '圖表板',
+        ExpenditureType: '支出類型',
+        ExpenditureTypeID: '支出類型',
+        TypeName: '類型名稱',
+        AccountInitialization: '帳戶初始化',
+        StockInitialization: '股票初始化',
+        StockTransaction: '股票交易',
+        Expenditure: '支出',
+        Income: '收入',
+        InternalTransfer: '內部轉帳',
+        Name: '名稱',
+        Balance: '餘額',
+        EffectiveDate: '生效日期',
+        AccountID: '帳戶',
+        TransferIntoAccountID: '轉入帳戶',
+        Amount: '總額',
+        Remarks: '註記',
+        StockCode: '股票編號',
+        Type: '交易類型',
+        Price: '每股價格',
+        Fees: '手續費',
     },
     passwordManager: {
         explanation: '由於安全性做不好時可能會發生很嚴重的問題，暫時決定先不做密碼管理工具了。'
@@ -41,5 +54,15 @@ export default {
         copyError: '無法複製密碼，錯誤訊息：',
         cancel: '取消',
         confirm: '確認'
-    }
+    },
+    materialTable:{
+        actions: '動作',
+        cancel: '取消',
+        save: '儲存',
+        noRecordsToDisplay: '無紀錄可顯示',
+        add: '新增',
+        edit: '修改',
+        delete: '刪除',
+        areYouSureDeleteThisRow: '你確定要刪除此行嗎?'
+    },
 };

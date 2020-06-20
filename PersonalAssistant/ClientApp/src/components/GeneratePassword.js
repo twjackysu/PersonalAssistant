@@ -62,14 +62,7 @@ function MySnackbarContentWrapper(props) {
   );
 }
 
-const useStyles2 = makeStyles(theme => ({
-  margin: {
-    margin: theme.spacing(1),
-  },
-}));
-
 const PasswordGenerate = props => {
-  const classes = useStyles2();
   const [requirement, setRequirement] = useState({
     includeNumbers: true,
     includeLowercaseLetters: true,

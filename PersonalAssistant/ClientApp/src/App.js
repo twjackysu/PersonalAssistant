@@ -8,6 +8,8 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { TabPaths } from './helper/RouterConstants';
+import Home from './components/Home';
+import TempForTestApi from './components/TempForTestApi';
 
 import './custom.css'
 
@@ -17,9 +19,10 @@ export default class App extends Component {
   render() {
     return (
       <Layout>
-        <AuthorizeRoute exact path={TabPaths.Default} component={AccountManager} />
+        <Route exact path={TabPaths.Default} component={Home} />
         <Route path={TabPaths.PasswordManager} component={PasswordManager} />
-        <AuthorizeRoute path={TabPaths.AccountManager} component={AccountManager} />
+        <AuthorizeRoute path={TabPaths.AccountManager.Index} component={AccountManager} />
+        <AuthorizeRoute path={'/testapi'} component={TempForTestApi} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
     );

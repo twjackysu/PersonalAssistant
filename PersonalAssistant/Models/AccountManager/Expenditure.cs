@@ -8,7 +8,7 @@ namespace PersonalAssistant.Models.AccountManager
         [Key]
         public int? ID { get; set; }
 
-        [Required]
+        [StringLength(50)]
         public string OwnerID { get; set; }
 
         [DataType(DataType.Date)]
