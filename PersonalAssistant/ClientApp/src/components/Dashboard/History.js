@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Highcharts from 'highcharts';
 import exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
@@ -9,7 +10,7 @@ import HighchartTheme from './HighchartTheme';
 exporting(Highcharts);
 Highcharts.theme = HighchartTheme;
 Highcharts.setOptions(Highcharts.theme);
-export default class History extends Component {
+class History extends Component {
     static displayName = History.name;
 
     constructor(props) {
@@ -29,7 +30,8 @@ export default class History extends Component {
         this.setData();
     }
     render() {
-        let { historyBalance } = this.state;
+        const { historyBalance } = this.state;
+        const { translate } = this.props;
         let seriesObj = {};
         let monthIndex = {};
         Object.keys(historyBalance).forEach((month, index)=> {
@@ -50,7 +52,7 @@ export default class History extends Component {
                 type: 'column'
             },
             title: {
-                text: 'Asset Trending Chart'
+                text: translate.assetTrendingChart
             },
             xAxis: {
                 categories: Object.keys(historyBalance)
@@ -77,7 +79,6 @@ export default class History extends Component {
                 data: seriesObj[assetName]
             }))
         };
-        console.log(options);
         return (<div>
             <HighchartsReact
                 highcharts={Highcharts}
@@ -87,3 +88,10 @@ export default class History extends Component {
         );
     }
 }
+
+const mapStateToProps = store => ({
+    translate: {
+        assetTrendingChart: store.lang.translation.accountManager.AssetTrendingChart,
+    }
+});
+export default connect(mapStateToProps)(History);

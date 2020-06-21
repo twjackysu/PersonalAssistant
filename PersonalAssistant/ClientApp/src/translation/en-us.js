@@ -37,6 +37,14 @@ export default {
         Type: 'Transaction type',
         Price: 'Price per share',
         Fees: 'Fees',
+        CurrentAsset: 'Current asset',
+        Expenditure30Days: 'Expenditure in the previous month',
+        AvgDailyExpenditure: 'Average daily expenditure',
+        AssetTrendingChart: 'Asset trending chart',
+        Asset: 'Asset',
+        Total: 'Total',
+        Cost: 'Cost'
+
     },
     passwordManager: {
         explanation: 'Since serious problems may occur when security is not good, it is temporarily decided not to do password manager tool.'

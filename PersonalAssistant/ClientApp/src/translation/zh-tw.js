@@ -27,7 +27,7 @@ export default {
         Income: '收入',
         InternalTransfer: '內部轉帳',
         Name: '名稱',
-        Balance: '餘額',
+        Asset: '資產',
         EffectiveDate: '生效日期',
         AccountID: '帳戶',
         TransferIntoAccountID: '轉入帳戶',
@@ -37,6 +37,13 @@ export default {
         Type: '交易類型',
         Price: '每股價格',
         Fees: '手續費',
+        CurrentAsset: '目前資產',
+        Expenditure30Days: '前一個月消費',
+        AvgDailyExpenditure: '每日平均消費',
+        AssetTrendingChart: '資產趨勢圖',
+        Balance: '餘額',
+        Total: '總計',
+        Cost: '花費'
     },
     passwordManager: {
         explanation: '由於安全性做不好時可能會發生很嚴重的問題，暫時決定先不做密碼管理工具了。'

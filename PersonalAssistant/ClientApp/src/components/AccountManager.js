@@ -87,7 +87,8 @@ const AccountManager = props => {
         <Tab label={translate.accountInitialization} component={Link} to={TabPaths.AccountManager.AccountInitializations} {...a11yProps(6)} />
         <Tab label={translate.stockInitialization} component={Link} to={TabPaths.AccountManager.StockInitializations} {...a11yProps(7)} />
       </Tabs>
-      <Route exact path={`${props.match.path}/Dashboard`} render={() => <Dashboard />} />
+      <Route exact path={`${props.match.path}`} render={() => <Dashboard />} />
+      <Route path={`${props.match.path}/Dashboard`} render={() => <Dashboard />} />
       <Route path={`${props.match.path}/Expenditures`} render={() => <RestfulTable controller='Expenditures' />} />
       <Route path={`${props.match.path}/Incomes`} render={() => <RestfulTable controller='Incomes' />} />
       <Route path={`${props.match.path}/InternalTransfers`} render={() => <RestfulTable controller='InternalTransfers' />} />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -27,7 +28,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-export default class Asset extends Component {
+class Asset extends Component {
     static displayName = Asset.name;
 
     constructor(props) {
@@ -51,7 +52,8 @@ export default class Asset extends Component {
         this.setData();
     }
     render() {
-        let { latestAccountBalance, latestStockValue } = this.state;
+        const { latestAccountBalance, latestStockValue } = this.state;
+        const { translate } = this.props;
         let total = 0;
         latestAccountBalance.forEach(element => {
             total += element.Balance;
@@ -64,8 +66,8 @@ export default class Asset extends Component {
                 <Table>
                     <TableHead>
                         <StyledTableRow>
-                            <StyledTableCell align='center'>Asset</StyledTableCell>
-                            <StyledTableCell align='center'>Balance</StyledTableCell>
+                            <StyledTableCell align='center'>{translate.asset}</StyledTableCell>
+                            <StyledTableCell align='center'>{translate.balance}</StyledTableCell>
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
@@ -80,7 +82,7 @@ export default class Asset extends Component {
                                 <StyledTableCell align='center'>{item.Date ? `${item.Balance} ${item.Date}` : item.Balance}</StyledTableCell>
                             </StyledTableRow>)}
                         <StyledTableRow>
-                            <StyledTableCell align='center'>Total</StyledTableCell>
+                            <StyledTableCell align='center'>{translate.total}</StyledTableCell>
                             <StyledTableCell align='center'>{total}</StyledTableCell>
                         </StyledTableRow>
                     </TableBody>
@@ -89,3 +91,12 @@ export default class Asset extends Component {
         );
     }
 }
+
+const mapStateToProps = store => ({
+    translate: {
+        asset: store.lang.translation.accountManager.Asset,
+        balance: store.lang.translation.accountManager.Balance,
+        total: store.lang.translation.accountManager.Total,
+    }
+});
+export default connect(mapStateToProps)(Asset);

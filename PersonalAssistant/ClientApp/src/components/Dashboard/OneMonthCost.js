@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -27,7 +28,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-export default class OneMonthCost extends Component {
+class OneMonthCost extends Component {
     static displayName = OneMonthCost.name;
 
     constructor(props) {
@@ -36,7 +37,7 @@ export default class OneMonthCost extends Component {
             oneMonthCost: {}
         };
     }
-    async setData(){
+    async setData() {
         let oneMonthCost = await populateData('/api/Get1MonthCost');
         this.setState({
             oneMonthCost: oneMonthCost
@@ -46,30 +47,47 @@ export default class OneMonthCost extends Component {
         this.setData();
     }
     render() {
-        let { oneMonthCost } = this.state;
+        const { oneMonthCost } = this.state;
+        const { translate } = this.props;
         let bodyRows = [];
         let count = 0;
-        for(let key in oneMonthCost){
+        let total = 0;
+        for (let key in oneMonthCost) {
             bodyRows.push(<StyledTableRow key={count}>
-                <StyledTableCell align='center'>{key}</StyledTableCell>
+                <StyledTableCell align='center'>{key === 'Fee'? translate.fees: key}</StyledTableCell>
                 <StyledTableCell align='center'>{oneMonthCost[key]}</StyledTableCell>
             </StyledTableRow>);
             count++;
+            total+=oneMonthCost[key];
         }
         return (
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <StyledTableRow>
-                            <StyledTableCell align='center'>Type</StyledTableCell>
-                            <StyledTableCell align='center'>Cost</StyledTableCell>
+                            <StyledTableCell align='center'>{translate.type}</StyledTableCell>
+                            <StyledTableCell align='center'>{translate.cost}</StyledTableCell>
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
                         {bodyRows}
+                        <StyledTableRow>
+                            <StyledTableCell align='center'>{translate.total}</StyledTableCell>
+                            <StyledTableCell align='center'>{total}</StyledTableCell>
+                        </StyledTableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
         );
     }
 }
+
+const mapStateToProps = store => ({
+    translate: {
+        type: store.lang.translation.accountManager.Type,
+        cost: store.lang.translation.accountManager.Cost,
+        total: store.lang.translation.accountManager.Total,
+        fees:  store.lang.translation.accountManager.Fees,
+    }
+});
+export default connect(mapStateToProps)(OneMonthCost);
