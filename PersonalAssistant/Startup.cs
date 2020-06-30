@@ -18,17 +18,22 @@ using IdentityServer4.Models;
 using Newtonsoft.Json.Serialization;
 using StockLib;
 using PersonalAssistant.Services;
+using System.IO;
+using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PersonalAssistant
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,8 +45,20 @@ namespace PersonalAssistant
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
+            var is4Builder = services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            #region SigningCredential
+            //// not recommended for production - you need to store your key material somewhere secure
+            //builder.AddDeveloperSigningCredential();
+            
+            //var fileName = Path.Combine(Environment.ContentRootPath, "PersonalAssistant.pfx");
+            //if (!File.Exists(fileName))
+            //{
+            //    throw new FileNotFoundException("Signing Certificate is missing!");
+            //}
+            //var cert = new X509Certificate2(fileName, "YourCertPassword");
+            //is4Builder.AddSigningCredential(cert);
+            #endregion
 
             services.AddAuthentication()
                 .AddGoogle(options => {
