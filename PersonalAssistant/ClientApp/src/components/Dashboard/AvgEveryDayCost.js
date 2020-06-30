@@ -73,7 +73,7 @@ class AvgEveryDayCost extends Component {
                         {bodyRows}
                         <StyledTableRow>
                             <StyledTableCell align='center'>{translate.total}</StyledTableCell>
-                            <StyledTableCell align='center'>{total}</StyledTableCell>
+                            <StyledTableCell align='center'>{Math.round(total*100)/100}</StyledTableCell>
                         </StyledTableRow>
                     </TableBody>
                 </Table>
