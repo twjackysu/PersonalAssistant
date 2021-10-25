@@ -292,8 +292,8 @@ namespace PersonalAssistant.Services
                 else
                 {
                     return stocksInfo.Select(x => (
-                        Name: $"{x.No} {x.Name}",
-                        Balance: (decimal)((x.LastTradedPrice ?? x.YesterdayClosingPrice) * stockAmount[x.No]),
+                        Name: $"{x.Value.No} {x.Value.Name}",
+                        Balance: (decimal)((x.Value.LastTradedPrice ?? x.Value.YesterdayClosingPrice) * stockAmount[x.Value.No]),
                         Data: default(string)
                     ));
                 }
