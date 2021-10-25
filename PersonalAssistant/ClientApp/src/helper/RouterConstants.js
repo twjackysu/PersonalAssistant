@@ -3,6 +3,7 @@ export const WebApi = {
   AccountInitializations: 'api/AccountInitializations',
   Expenditures: 'api/Expenditures',
   Incomes: 'api/Incomes',
+  ExpenditureWays: 'api/ExpenditureWays',
   InternalTransfers: 'api/InternalTransfers',
   StockInitializations: 'api/StockInitializations',
   StockTransactions: 'api/StockTransactions'

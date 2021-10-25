@@ -9,19 +9,17 @@ using PersonalAssistant.Models.AccountManager;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace PersonalAssistant.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class StockTransactionsController : Controller
+    public class ExpenditureWaysController : ControllerBase
     {
-        private readonly ILogger<StockTransactionsController> _logger;
+        private readonly ILogger<ExpenditureWaysController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public StockTransactionsController(ILogger<StockTransactionsController> logger, ApplicationDbContext context)
+        public ExpenditureWaysController(ILogger<ExpenditureWaysController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -33,7 +31,7 @@ namespace PersonalAssistant.Controllers
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            return Ok(_context.StockTransaction.Where(x => x.OwnerID == userID).ForEach(x => { x.OwnerID = default; }));
+            return Ok(_context.ExpenditureWay.Where(x => x.OwnerID == userID).ForEach(x => { x.OwnerID = default; }));
         }
 
         // GET api/<controller>/5
@@ -43,24 +41,24 @@ namespace PersonalAssistant.Controllers
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            var stockTransaction = await _context.StockTransaction.FindAsync(id);
-            if (stockTransaction == null)
+            var expenditureWay = await _context.ExpenditureWay.FindAsync(id);
+            if (expenditureWay == null)
                 return NotFound();
-            if (userID != stockTransaction.OwnerID)
+            if (userID != expenditureWay.OwnerID)
                 return Unauthorized();
-            return Ok(stockTransaction);
+            return Ok(expenditureWay);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]StockTransaction stockTransaction)
+        public async Task<IActionResult> Post([FromBody] ExpenditureWay expenditureWay)
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            stockTransaction.OwnerID = userID;
-            stockTransaction.ID = null;
-            _context.Add(stockTransaction);
+            expenditureWay.OwnerID = userID;
+            expenditureWay.ID = null;
+            _context.Add(expenditureWay);
             try
             {
                 await _context.SaveChangesAsync();
@@ -70,31 +68,31 @@ namespace PersonalAssistant.Controllers
                 _logger.LogError(e.ToString());
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-            return CreatedAtAction(nameof(Get), new { id = stockTransaction.ID }, stockTransaction);
+            return CreatedAtAction(nameof(Get), new { id = expenditureWay.ID }, expenditureWay);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]StockTransaction stockTransaction)
+        public async Task<IActionResult> Put(int id, [FromBody] ExpenditureWay expenditureWay)
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            stockTransaction.OwnerID = userID;
-            var oldStockTransaction = await _context.StockTransaction.FindAsync(id);
-            _context.Entry(oldStockTransaction).State = EntityState.Detached;
-            if (oldStockTransaction == null)
+            expenditureWay.OwnerID = userID;
+            var oldExpenditureWay = await _context.ExpenditureWay.FindAsync(id);
+            _context.Entry(oldExpenditureWay).State = EntityState.Detached;
+            if (oldExpenditureWay == null)
             {
-                stockTransaction.ID = null;
-                _context.Add(stockTransaction);
+                expenditureWay.ID = null;
+                _context.Add(expenditureWay);
             }
             else
             {
-                if (userID != oldStockTransaction.OwnerID)
+                if (userID != oldExpenditureWay.OwnerID)
                     return Unauthorized();
-                if (id != oldStockTransaction.ID)
+                if (id != oldExpenditureWay.ID)
                     return BadRequest();
-                _context.Update(stockTransaction);
+                _context.Update(expenditureWay);
             }
             try
             {
@@ -113,15 +111,15 @@ namespace PersonalAssistant.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var stockTransaction = await _context.StockTransaction.FindAsync(id);
-            if (stockTransaction == null)
+            var expenditureWay = await _context.ExpenditureWay.FindAsync(id);
+            if (expenditureWay == null)
                 return NotFound();
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            if (userID != stockTransaction.OwnerID)
+            if (userID != expenditureWay.OwnerID)
                 return Unauthorized();
-            _context.StockTransaction.Remove(stockTransaction);
+            _context.ExpenditureWay.Remove(expenditureWay);
 
             try
             {

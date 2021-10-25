@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using PersonalAssistant.Data;
 using PersonalAssistant.Extension;
 using PersonalAssistant.Models.AccountManager;
@@ -28,22 +29,12 @@ namespace PersonalAssistant.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            return Ok(await _context.Expenditure.Where(x => x.OwnerID == userID)
-                .Select(x => new Expenditure { 
-                    ID = x.ID,
-                    Account = x.Account,
-                    Amount = x.Amount,
-                    Fees = x.Fees,
-                    ExpenditureType = x.ExpenditureType,
-                    EffectiveDate = x.EffectiveDate,
-                    Remarks = x.Remarks
-                })//remove user sid to reduce json size
-                .AsNoTracking().ToArrayAsync());
+            return Ok(_context.Expenditure.Where(x => x.OwnerID == userID).ForEach(x => { x.OwnerID = default; }));
         }
 
         // GET api/<controller>/5
@@ -55,9 +46,7 @@ namespace PersonalAssistant.Controllers
                 return Forbid();
             var expenditure = await _context.Expenditure.FindAsync(id);
             if (expenditure == null)
-            {
                 return NotFound();
-            }
             if (userID != expenditure.OwnerID)
                 return Unauthorized();
             return Ok(expenditure);

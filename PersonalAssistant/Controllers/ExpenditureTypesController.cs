@@ -26,14 +26,12 @@ namespace PersonalAssistant.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            return Ok(await _context.ExpenditureType.Where(x => x.OwnerID == userID)
-                .Select(x => new ExpenditureType { ID = x.ID, TypeName = x.TypeName })//remove user sid to reduce json size
-                .AsNoTracking().ToArrayAsync());
+            return Ok(_context.ExpenditureType.Where(x => x.OwnerID == userID).ForEach(x => { x.OwnerID = default; }));
         }
 
         // GET api/<controller>/5
@@ -45,9 +43,7 @@ namespace PersonalAssistant.Controllers
                 return Forbid();
             var expenditureType = await _context.ExpenditureType.FindAsync(id);
             if (expenditureType == null)
-            {
                 return NotFound();
-            }
             if (userID != expenditureType.OwnerID)
                 return Unauthorized();
             return Ok(expenditureType);

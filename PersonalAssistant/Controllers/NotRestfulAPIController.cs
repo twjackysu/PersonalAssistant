@@ -63,7 +63,7 @@ namespace PersonalAssistant.Controllers
             var accounts = new Dictionary<int, AccountInitialization>();
             var accountsBalance = new Dictionary<int, decimal>();
 
-            var stocksAmount = new Dictionary<string, int>();
+            var stocksAmount = new Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int>();
             bool isFirst = true;
             while (start < utcNow)
             {

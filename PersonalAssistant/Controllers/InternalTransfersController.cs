@@ -29,23 +29,12 @@ namespace PersonalAssistant.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            return Ok(await _context.InternalTransfer.Where(x => x.OwnerID == userID)
-                .Select(x => new InternalTransfer
-                {
-                    ID = x.ID,
-                    EffectiveDate = x.EffectiveDate,
-                    Account = x.Account,
-                    Amount = x.Amount,
-                    Fees = x.Fees,
-                    TransferIntoAccount = x.TransferIntoAccount,
-                    Remarks = x.Remarks
-                })//remove user sid to reduce json size
-                .AsNoTracking().ToArrayAsync());
+            return Ok(_context.InternalTransfer.Where(x => x.OwnerID == userID).ForEach(x => { x.OwnerID = default; }));
         }
 
         // GET api/<controller>/5
@@ -57,9 +46,7 @@ namespace PersonalAssistant.Controllers
                 return Forbid();
             var internalTransfer = await _context.InternalTransfer.FindAsync(id);
             if (internalTransfer == null)
-            {
                 return NotFound();
-            }
             if (userID != internalTransfer.OwnerID)
                 return Unauthorized();
             return Ok(internalTransfer);

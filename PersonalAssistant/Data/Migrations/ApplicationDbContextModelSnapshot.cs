@@ -15,7 +15,7 @@ namespace PersonalAssistant.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -281,6 +281,9 @@ namespace PersonalAssistant.Data.Migrations
                     b.Property<int?>("ExpenditureTypeID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ExpenditureWayID")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("Fees")
                         .HasColumnType("decimal(18,2)");
 
@@ -296,6 +299,8 @@ namespace PersonalAssistant.Data.Migrations
                     b.HasIndex("AccountID");
 
                     b.HasIndex("ExpenditureTypeID");
+
+                    b.HasIndex("ExpenditureWayID");
 
                     b.ToTable("Expenditure");
                 });
@@ -320,6 +325,26 @@ namespace PersonalAssistant.Data.Migrations
                     b.ToTable("ExpenditureType");
                 });
 
+            modelBuilder.Entity("PersonalAssistant.Models.AccountManager.ExpenditureWay", b =>
+                {
+                    b.Property<int?>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OwnerID")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("WayName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ExpenditureWay");
+                });
+
             modelBuilder.Entity("PersonalAssistant.Models.AccountManager.Income", b =>
                 {
                     b.Property<int?>("ID")
@@ -336,6 +361,9 @@ namespace PersonalAssistant.Data.Migrations
                     b.Property<DateTime>("EffectiveDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("IncomeCategoryID")
+                        .HasColumnType("int");
+
                     b.Property<string>("OwnerID")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -347,7 +375,29 @@ namespace PersonalAssistant.Data.Migrations
 
                     b.HasIndex("AccountID");
 
+                    b.HasIndex("IncomeCategoryID");
+
                     b.ToTable("Income");
+                });
+
+            modelBuilder.Entity("PersonalAssistant.Models.AccountManager.IncomeCategory", b =>
+                {
+                    b.Property<int?>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("OwnerID")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("IncomeCategory");
                 });
 
             modelBuilder.Entity("PersonalAssistant.Models.AccountManager.InternalTransfer", b =>
@@ -398,6 +448,9 @@ namespace PersonalAssistant.Data.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EffectiveDate")
                         .HasColumnType("datetime2");
 
@@ -445,6 +498,9 @@ namespace PersonalAssistant.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -583,6 +639,10 @@ namespace PersonalAssistant.Data.Migrations
                     b.HasOne("PersonalAssistant.Models.AccountManager.ExpenditureType", "ExpenditureType")
                         .WithMany()
                         .HasForeignKey("ExpenditureTypeID");
+
+                    b.HasOne("PersonalAssistant.Models.AccountManager.ExpenditureWay", "ExpenditureWay")
+                        .WithMany()
+                        .HasForeignKey("ExpenditureWayID");
                 });
 
             modelBuilder.Entity("PersonalAssistant.Models.AccountManager.Income", b =>
@@ -592,6 +652,10 @@ namespace PersonalAssistant.Data.Migrations
                         .HasForeignKey("AccountID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("PersonalAssistant.Models.AccountManager.IncomeCategory", "IncomeCategory")
+                        .WithMany()
+                        .HasForeignKey("IncomeCategoryID");
                 });
 
             modelBuilder.Entity("PersonalAssistant.Models.AccountManager.InternalTransfer", b =>
@@ -599,7 +663,7 @@ namespace PersonalAssistant.Data.Migrations
                     b.HasOne("PersonalAssistant.Models.AccountManager.AccountInitialization", "Account")
                         .WithMany()
                         .HasForeignKey("AccountID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PersonalAssistant.Models.AccountManager.AccountInitialization", "TransferIntoAccount")

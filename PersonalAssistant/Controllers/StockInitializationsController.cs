@@ -28,20 +28,12 @@ namespace PersonalAssistant.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             var userID = User.GetSID();
             if (userID == null)
                 return Forbid();
-            return Ok(await _context.StockInitialization.Where(x => x.OwnerID == userID)
-                .Select(x => new StockInitialization
-                {
-                    ID = x.ID,
-                    StockCode = x.StockCode,
-                    Amount = x.Amount,
-                    EffectiveDate = x.EffectiveDate,
-                })//remove user sid to reduce json size
-                .AsNoTracking().ToArrayAsync());
+            return Ok(_context.StockInitialization.Where(x => x.OwnerID == userID).ForEach(x => { x.OwnerID = default; }));
         }
 
         // GET api/<controller>/5
@@ -53,9 +45,7 @@ namespace PersonalAssistant.Controllers
                 return Forbid();
             var stockInitialization = await _context.StockInitialization.FindAsync(id);
             if (stockInitialization == null)
-            {
                 return NotFound();
-            }
             if (userID != stockInitialization.OwnerID)
                 return Unauthorized();
             return Ok(stockInitialization);

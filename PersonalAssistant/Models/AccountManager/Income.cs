@@ -11,7 +11,6 @@ namespace PersonalAssistant.Models.AccountManager
         [StringLength(50)]
         public string OwnerID { get; set; }
 
-        [DataType(DataType.Date)]
         [Required]
         public DateTime EffectiveDate { get; set; }
 
@@ -19,6 +18,9 @@ namespace PersonalAssistant.Models.AccountManager
         public int AccountID { get; set; }
 
         public AccountInitialization Account { get; set; }
+
+        public int? IncomeCategoryID { get; set; }
+        public IncomeCategory IncomeCategory { get; set; }
 
         [Required]
         public decimal Amount { get; set; }

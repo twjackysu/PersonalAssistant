@@ -12,7 +12,6 @@ namespace PersonalAssistant.Models.AccountManager
         [StringLength(50)]
         public string OwnerID { get; set; }
 
-        [DataType(DataType.Date)]
         [Required]
         public DateTime EffectiveDate { get; set; }
 

@@ -39,13 +39,7 @@ namespace PersonalAssistant.Services
             });
         }
 
-        /// <summary>
-        /// 結算股價價值
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="end">結算時間，給當天的話，如果當天開盤要等13:30後才會得到最新價錢，如果想要即時股價請設null</param>
-        /// <returns></returns>
-        public async Task<IEnumerable<(string Name, decimal Balance, string Date)>> GetCumulativeStockValue(string userID, DateTime? end = null)
+        public async Task<IEnumerable<(string Name, decimal Balance, string Type, string Date)>> GetCumulativeStockValue(string userID, DateTime? end = null)
         {
             DateTime _end = DateTime.UtcNow;
             if (end.HasValue)
@@ -67,7 +61,6 @@ namespace PersonalAssistant.Services
             }
             return await GetStockPrice(nowStockAmount, end);
         }
-        
         public Dictionary<string, decimal> GetDateRangeCostByExpenditureType(string userID, DateTime end, DateTime? start = null)
         {
             var types = context.ExpenditureType.Where(x => x.OwnerID == userID).ToDictionary(x => x.ID, x => x.TypeName);
@@ -119,13 +112,6 @@ namespace PersonalAssistant.Services
             return totalExpenditure.ToDictionary(x => x.Key, x => Math.Round(totalExpenditure[x.Key] / (decimal)daysCount, 2));
         }
 
-        /// <summary>
-        /// 獲得指定時間範圍的帳戶總收入和總支出的總和
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="end">小於End</param>
-        /// <param name="start">大於等於Start</param>
-        /// <returns></returns>
         public Dictionary<int, decimal> GetDateRangeAccountChanges(string userID, DateTime end, DateTime? start = null)
         {
             var totalIncome = context.Income.Where(x => x.OwnerID == userID && x.EffectiveDate >= x.Account.EffectiveDate && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start))
@@ -160,7 +146,7 @@ namespace PersonalAssistant.Services
             var stockTransactions = context.StockTransaction.Where(x => x.OwnerID == userID && x.EffectiveDate >= x.Account.EffectiveDate && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start)).ToList();
             foreach (var stockTransaction in stockTransactions)
             {
-                if (stockTransaction.Type == StockTransactionType.Buy)
+                if (stockTransaction.TransactionType == StockTransactionType.Buy)
                 {
                     var expenditure = stockTransaction.Price * stockTransaction.Amount + (stockTransaction.Fees ?? 0);
 
@@ -188,27 +174,20 @@ namespace PersonalAssistant.Services
             return clone;
         }
 
-        /// <summary>
-        /// 獲得指定時間範圍的股票總買進和總賣出的數量總和
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="end">小於End</param>
-        /// <param name="start">大於等於Start</param>
-        /// <returns></returns>
-        public Dictionary<string, int> GetDateRangeStockChanges(string userID, DateTime end, DateTime? start = null)
+        public Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int> GetDateRangeStockChanges(string userID, DateTime end, DateTime? start = null)
         {
-            var sumBuy = context.StockTransaction.Where(x => x.OwnerID == userID && x.Type == StockTransactionType.Buy && 
+            var sumBuy = context.StockTransaction.Where(x => x.OwnerID == userID && x.TransactionType == StockTransactionType.Buy &&
                                                              x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start))
                                                             .AsEnumerable()
-                                                            .GroupBy(x => x.StockCode)
-                                                            .ToDictionary(g => g.Key, g => g.Sum(x => x.Amount));
+                                                            .GroupBy(x => new { x.StockCode, x.Type })
+                                                            .ToDictionary(g => (g.Key.Type, g.Key.StockCode), g => g.Sum(x => x.Amount));
 
-            var sumSell = context.StockTransaction.Where(x => x.OwnerID == userID && x.Type == StockTransactionType.Sell && 
+            var sumSell = context.StockTransaction.Where(x => x.OwnerID == userID && x.TransactionType == StockTransactionType.Sell &&
                                                               x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start))
                                                               .AsEnumerable()
-                                                              .GroupBy(x => x.StockCode)
-                                                              .ToDictionary(g => g.Key, g => g.Sum(x => x.Amount));
-            var nowStockAmount = new Dictionary<string, int>();
+                                                              .GroupBy(x => new { x.StockCode, x.Type })
+                                                              .ToDictionary(g => (g.Key.Type, g.Key.StockCode), g => g.Sum(x => x.Amount));
+            var nowStockAmount = new Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int>();
             foreach (var pair in sumBuy)
             {
                 if (nowStockAmount.ContainsKey(pair.Key))
@@ -234,68 +213,63 @@ namespace PersonalAssistant.Services
             return nowStockAmount;
         }
 
-        /// <summary>
-        /// 獲得指定時間範圍的新帳戶
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="end">小於End</param>
-        /// <param name="start">大於等於Start</param>
-        /// <returns></returns>
         public List<AccountInitialization> GetDateRangeAccountsInit(string userID, DateTime end, DateTime? start = null)
         {
             return context.AccountInitialization.Where(x => x.OwnerID == userID && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start)).ToList();
         }
-        /// <summary>
-        /// 獲得指定時間範圍的初始化股票
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="end">小於End</param>
-        /// <param name="start">大於等於Start</param>
-        /// <returns></returns>
-        public Dictionary<string, int> GetDateRangeStocksInit(string userID, DateTime end, DateTime? start = null)
+
+        public Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int> GetDateRangeStocksInit(string userID, DateTime end, DateTime? start = null)
         {
-            return context.StockInitialization.Where(x => x.OwnerID == userID && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start)).ToDictionary(x => x.StockCode, x => x.Amount);
+            return context.StockInitialization.Where(x => x.OwnerID == userID && x.EffectiveDate < end && (!start.HasValue || x.EffectiveDate >= start)).ToDictionary(x => (x.Category, x.StockCode), x => x.Amount);
         }
 
-        /// <summary>
-        /// 獲得指定日期的股票價格
-        /// </summary>
-        /// <param name="stockAmount"></param>
-        /// <param name="end">不給end會獲得最即時的價格</param>
-        /// <returns></returns>
-        public async Task<IEnumerable<(string Name, decimal Balance, string Date)>> GetStockPrice(Dictionary<string, int> stockAmount, DateTime? end)
+        public async Task<IEnumerable<(string Name, decimal Balance, string Type, string Date)>> GetStockPrice(Dictionary<(Models.AccountManager.StockCategory type, string stockNo), int> stockAmount, DateTime? end)
         {
             stockAmount = stockAmount.Where(x => x.Value > 0).ToDictionary(x => x.Key, x => x.Value);
-
             if (end.HasValue)
             {
-                var latestStocksPrice = await stockDB.GetDateStocksPrice(end.Value, stockAmount.Select(x => x.Key).ToArray());
-                return latestStocksPrice.Select(x => (
-                    Name: $"{x.Key} {x.Value.Name}",
-                    Balance: x.Value.ClosingPrice * stockAmount[x.Key],
-                    Date: x.Value.Date.ToString("yyyy-MM-dd")
-                ));
+                var latestStocksPrice = await stockDB.GetDateStocksPrice(end.Value, stockAmount.Select(x => x.Key.stockNo).Distinct().ToArray());
+                return stockAmount.Select(x =>
+                {
+                    var stock = latestStocksPrice[x.Key.stockNo];
+                    return (
+                        Name: $"{x.Key.stockNo} {stock.Name}",
+                        Balance: stock.ClosingPrice * stockAmount[x.Key],
+                        Type: x.Key.type.ToString(),
+                        Date: stock.Date.ToString("yyyy-MM-dd")
+                    );
+                });
             }
             else
             {
-                var latestStocksPrice = await stockDB.GetLatestStocksPrice(stockAmount.Select(x => x.Key).ToArray());
+                var latestStocksPrice = await stockDB.GetLatestStocksPrice(stockAmount.Select(x => x.Key.stockNo).Distinct().ToArray());
 
-                var stocksInfo = await stockInfoBuilder.GetStocksInfo(stockAmount.Select(x => (latestStocksPrice[x.Key].Type, x.Key)).ToArray());
+                var stocksInfo = await stockInfoBuilder.GetStocksInfo(stockAmount.Select(x => (latestStocksPrice[x.Key.stockNo].Type, x.Key.stockNo)).ToArray());
                 if (stocksInfo == null)
                 {
-                    return latestStocksPrice.Select(x => (
-                        Name: $"{x.Key} {x.Value.Name}",
-                        Balance: x.Value.ClosingPrice * stockAmount[x.Key],
-                        Date: x.Value.Date.ToString("yyyy-MM-dd")
-                    ));
+                    return stockAmount.Select(x =>
+                    {
+                        var stock = latestStocksPrice[x.Key.stockNo];
+                        return (
+                            Name: $"{x.Key.stockNo} {stock.Name}",
+                            Balance: stock.ClosingPrice * stockAmount[x.Key],
+                            Type: x.Key.type.ToString(),
+                            Date: stock.Date.ToString("yyyy-MM-dd")
+                        );
+                    });
                 }
                 else
                 {
-                    return stocksInfo.Select(x => (
-                        Name: $"{x.Value.No} {x.Value.Name}",
-                        Balance: (decimal)((x.Value.LastTradedPrice ?? x.Value.YesterdayClosingPrice) * stockAmount[x.Value.No]),
-                        Data: default(string)
-                    ));
+                    return stockAmount.Select(x =>
+                    {
+                        var stock = stocksInfo[x.Key.stockNo];
+                        return (
+                            Name: $"{x.Key.stockNo} {stock.Name}",
+                            Balance: (decimal)((stock.LastTradedPrice ?? stock.YesterdayClosingPrice) * x.Value),
+                            Type: x.Key.type.ToString(),
+                            Data: default(string)
+                        );
+                    });
                 }
             }
         }

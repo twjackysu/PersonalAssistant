@@ -15,6 +15,9 @@ namespace PersonalAssistant.Models.AccountManager
         [Required]
         public DateTime EffectiveDate { get; set; }
 
+        [Required]
+        public StockCategory Category { get; set; }
+
         [StringLength(10)]
         [Required]
         public string StockCode { get; set; }

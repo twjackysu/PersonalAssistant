@@ -52,7 +52,7 @@ namespace PersonalAssistant.Controllers.MaterialTable
                     x.Fees,
                     x.Price,
                     x.StockCode,
-                    x.Type
+                    x.TransactionType
                 })
                 .AsNoTracking().ToArrayAsync()
             });

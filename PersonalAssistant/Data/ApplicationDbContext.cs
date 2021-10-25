@@ -19,6 +19,7 @@ namespace PersonalAssistant.Data
         {
         }
         public DbSet<ExpenditureType> ExpenditureType { get; set; }
+        public DbSet<ExpenditureWay> ExpenditureWay { get; set; }
         public DbSet<AccountInitialization> AccountInitialization { get; set; }
         public DbSet<Expenditure> Expenditure { get; set; }
         public DbSet<Income> Income { get; set; }

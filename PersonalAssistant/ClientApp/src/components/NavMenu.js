@@ -21,13 +21,11 @@ const NavMenu = props => {
         <Grid container direction='row' justify='space-between' alignItems='center'>
           <Grid item>
             <Grid container direction='row' alignItems='center'>
-              <Hidden mdUp>
-                <Grid item>
-                  <IconButton edge='start' color='inherit' aria-label='menu' onClick={(e) => props.switch_menu_list(true)}>
-                    <MenuIcon />
-                  </IconButton>
-                </Grid>
-              </Hidden>
+              <Grid item>
+                <IconButton edge='start' color='inherit' aria-label='menu' onClick={(e) => props.switch_menu_list(true)}>
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
               <Grid item>
                 <Typography variant='h5' color='inherit' align='center' component={Link} to='/' >
                   PersonalAssistant

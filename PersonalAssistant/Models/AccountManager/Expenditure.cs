@@ -11,7 +11,6 @@ namespace PersonalAssistant.Models.AccountManager
         [StringLength(50)]
         public string OwnerID { get; set; }
 
-        [DataType(DataType.Date)]
         [Required]
         public DateTime EffectiveDate { get; set; }
 
@@ -26,6 +25,8 @@ namespace PersonalAssistant.Models.AccountManager
         public decimal? Fees { get; set; }
 
         public string Remarks { get; set; }
+        public int? ExpenditureWayID { get; set; }
+        public ExpenditureWay ExpenditureWay { get; set; }
 
         public int? ExpenditureTypeID { get; set; }
 

@@ -32,13 +32,13 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Models\AccountManager\Dashboard\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Models\AccountManager\Dashboard\**" />
+    <EmbeddedResource Remove="Models\AccountManager\Dashboard\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Models\AccountManager\Dashboard\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\AccountManager\Dashboard\" />
   </ItemGroup>
 
   <ItemGroup>
